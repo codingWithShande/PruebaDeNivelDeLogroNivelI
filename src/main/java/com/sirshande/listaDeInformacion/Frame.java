@@ -71,54 +71,48 @@ public class Frame extends javax.swing.JFrame {
         String codigo = jtCodigo.getText();
         String nombreCompleto = jtNombre.getText().toUpperCase();
         String estadoCivil = jcbEstado.getSelectedItem().toString();
-        String sueldoNeto = jtSueldoNeto.getText();
-        String ven = jtVenta.getText();
-        String hijos = jtNumHijos.getText();
-
+        double sueldoBase = Double.parseDouble(jtSueldoBase.getText());
         double venta = Double.parseDouble(jtVenta.getText());
-        double comision = venta * 0.1;
-        String comi = String.valueOf(comision);
-        jtComision.setText(comi);
+        int hijosNum = Integer.parseInt(jtNumHijos.getText());
+        String estado = estadoCivil; // Usar el valor ya obtenido
 
-        double sueldo = Double.parseDouble(jtSueldoBase.getText());
-        double par1 = sueldo + comision;
+        double comision = venta * 0.1;
+        jtComision.setText(String.valueOf(comision));
+
+        double par1 = sueldoBase + comision;
         double descuentoImpuesto = 0.0;
 
-        if(par1 > 3000){
+        if (par1 > 3000) {
             descuentoImpuesto = par1 * 0.06;
         } else if (par1 > 2300) {
             descuentoImpuesto = par1 * 0.04;
-        }else if (par1 > 1500){
+        } else if (par1 > 1500) {
             descuentoImpuesto = par1 * 0.03;
-        }else{
-            descuentoImpuesto=0.0;
         }
 
-        String desImpuesto=String.valueOf(descuentoImpuesto);
-        jtDescuentoImpuesto.setText(desImpuesto);
+        jtDescuentoImpuesto.setText(String.valueOf(descuentoImpuesto));
 
-        String estado = (String) jcbEstado.getSelectedItem();
         double descuentos = 0.0;
-        int hijosNum = Integer.parseInt(jtNumHijos.getText());
-        if(estado.equals("SOLTERO")){
+
+        if (estado.equals("SOLTERO")) {
             descuentos = 100;
             jtEstadoCivil.setText("SOLTERO");
-        }
-        if(estado.equals("CASADO")){
-            if(hijosNum != 0){
+        } else if (estado.equals("CASADO")) {
+            if (hijosNum != 0) {
                 descuentos = 50 + (70 * hijosNum);
                 jtEstadoCivil.setText("CASADO");
-            }else {
+            } else {
                 descuentos = 120;
                 jtEstadoCivil.setText("SOLTERO");
             }
         }
-        String descuentoSueldo=String.valueOf(descuentos);
-        jtDescuentos.setText(descuentoSueldo);
-        double sueldosNeto = sueldo + comision - descuentoImpuesto - descuentos;
-        String SueldosNetos = String.valueOf(sueldosNeto);
-        jtSueldoNeto.setText(SueldosNetos);
 
+        jtDescuentos.setText(String.valueOf(descuentos));
+
+        double sueldoNeto = sueldoBase + comision - descuentoImpuesto - descuentos;
+        jtSueldoNeto.setText(String.valueOf(sueldoNeto));
+
+        
 
     }//GEN-LAST:event_jbRegistrarActionPerformed
 
